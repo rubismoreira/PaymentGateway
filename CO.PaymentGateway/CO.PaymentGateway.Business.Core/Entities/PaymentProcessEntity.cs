@@ -11,16 +11,19 @@ namespace CO.PaymentGateway.Business.Core.Entities
 
         public string CardNumber { get; set; }
 
-        public string CCV { get; set; }
+        public string CVV { get; set; }
 
         public int ValidationMonth { get; set; }
+        
+        public int ValidationYear { get; set; }
 
         public decimal Amount { get; set; }
 
         public DateTime RegistrationTime { get; set; }
 
         public CardType CardType { get; set; }
-
         public Currency Currency { get; set; }
+        
+        public Guid ContextId { get; set; }
     }
 }

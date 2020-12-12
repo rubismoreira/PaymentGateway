@@ -22,7 +22,7 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
                 Amount = request.Amount,
                 CardNumber = request.CardNumber,
                 CardType = request.CardType,
-                CCV = request.CCV,
+                CVV = request.CVV,
                 Currency = request.Currency,
                 RegistrationTime = request.RegistrationTime
             };
