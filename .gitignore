@@ -1,0 +1,14 @@
+obj
+bin
+out
+lcov.info
+*.aes
+*.env
+.version
+**/.vs
+temp
+.vs
+*.csproj.user
+*.sln.DotSettings.user
+.DS_Store
+.history
