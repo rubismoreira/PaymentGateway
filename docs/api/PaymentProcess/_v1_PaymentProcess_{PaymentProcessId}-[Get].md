@@ -40,4 +40,9 @@ application/json
 The following acceptance criteria rules are required for this endpoint.
 
 > When a PaymentProcess is found, then return a 200 code with the previously specifed fields
+
+
+> The cardnumber should be masked in the format XXXXXXXXXXXX1234
+
+
 > If the specified PaymentProcess cannot be found, then return a 404 code∫

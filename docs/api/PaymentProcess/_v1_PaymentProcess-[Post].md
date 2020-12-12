@@ -50,8 +50,16 @@ application/json
 The following acceptance criteria rules are required for this endpoint.
 
 > When the bank entity returns accepted or denied the the payment process is stored on the service database, then a 201 should be returned
+
+
 > The CardNumber should be stored on database masking the first 3/4 with 'X'
+
+
 > When it was not possible to connect with bank entity, then a 404 should be returned
+
+
 > When expiration year and expiration month are before than todays date, then a 422 should be returned
+
+
 > When the same user tries to process a payment for the third time with the same contextid and the payment is rejected by the Bank Entity, then a 422 should be returned
   
