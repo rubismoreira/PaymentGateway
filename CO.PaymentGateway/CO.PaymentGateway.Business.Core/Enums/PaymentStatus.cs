@@ -3,7 +3,7 @@
     public enum PaymentStatus
     {
         Approved = 1,
-        Denied = -1,
-        NoAnswer = 0
+        Denied = 0,
+        NoAnswer = -1
     }
 }

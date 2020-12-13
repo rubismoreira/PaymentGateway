@@ -1,9 +1,10 @@
 ﻿using CO.PaymentGateway.Business.Core.Enums;
+using CO.PaymentGateway.Business.Core.UseCases.Common;
 using System;
 
 namespace CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands
 {
-    public class PaymentProcessRequest
+    public class PaymentProcessRequest : ICommandRequest
     {
         public string CardNumber { get; set; }
 

@@ -2,6 +2,7 @@
 using CO.PaymentGateway.Data.EFContext;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CO.PaymentGateway.Business.Core.PaymentProcessException;
 
 namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProcess
 {
@@ -21,9 +22,21 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProces
         [HttpPost("/v1/paymentprocess")]
         public async Task<ActionResult<PaymentProcessResponse>> PostPaymentProcessEntity(CreatePaymentProcessRequestModel paymentProcessRequest)
         {
-            var paymentProcessResponse = await this._processPaymentCommand.ExecuteAsync(paymentProcessRequest.ToBusinessRequestModel());
+            try
+            {
+                var paymentProcessResponse =
+                    await this._processPaymentCommand.ExecuteAsync(paymentProcessRequest.ToBusinessRequestModel());
 
-            return Created($"{this.Request.Path.Value}/{paymentProcessResponse.PaymentProcessId}", paymentProcessResponse);
+                return Created($"{this.Request.Path.Value}/{paymentProcessResponse.PaymentProcessId}",
+                    paymentProcessResponse);
+            }
+            
+            catch (ExpirationDateException ex)
+            {
+                return UnprocessableEntity(ex.Message);
+            }
+            
+           
         }
     }
 

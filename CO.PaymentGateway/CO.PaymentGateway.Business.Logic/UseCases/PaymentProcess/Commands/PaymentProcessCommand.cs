@@ -6,6 +6,7 @@ using CO.PaymentGateway.BankClient.Client;
 using CO.PaymentGateway.BankClient.Entities;
 using CO.PaymentGateway.Business.Core.Enums;
 using System;
+using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Rules;
 
 namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
 {
@@ -14,15 +15,19 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
         private readonly IPaymentProcessWriteRepository _repository;
 
         private readonly IBankHttpClient _bankClient;
-        public PaymentProcessCommand(IPaymentProcessWriteRepository repository, IBankHttpClient bankClient)
+
+        private readonly IPaymentRuleEngine _ruleEngine;
+        
+        public PaymentProcessCommand(IPaymentProcessWriteRepository repository, IBankHttpClient bankClient, IPaymentRuleEngine ruleEngine)
         {
             this._repository = repository;
             this._bankClient = bankClient;
+            this._ruleEngine = ruleEngine;
         }
 
         public async Task<PaymentProcessResponse> ExecuteAsync(PaymentProcessRequest request)
         {
-            //validation
+            this._ruleEngine.ProcessRules(request);
 
             var clientResponse = await this._bankClient.CreatePayment(new BankPayment
             {

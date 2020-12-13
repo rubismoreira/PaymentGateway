@@ -3,8 +3,10 @@ using CO.PaymentGateway.BankClient.Client;
 using CO.PaymentGateway.Business.Core.Repositories;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Queries;
+using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Rules;
 using CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands;
 using CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Queries;
+using CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Rules;
 using CO.PaymentGateway.Data.EFContext;
 using CO.PaymentGateway.Data.Repositories.PaymentProcess;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +40,10 @@ namespace CO.PaymentGateway.HostApp
             services.AddScoped<IPaymentProcessGetAllQuery, PaymentProcessGetAllQuery>();
             services.AddScoped<IPaymentProcessGetByIdQuery, PaymentProcessGetByIdQuery>();
             services.AddScoped<IPaymentProcessCommand, PaymentProcessCommand>();
+
+            services.AddScoped<IPaymentProcessValidationRule, ExpirationDateIsValidRule>();
+            services.AddScoped<IPaymentProcessValidationRule, PaymentDeniedTwiceRule>();
+            services.AddScoped<IPaymentRuleEngine, PaymentRuleEngine>();
 
             services.AddHttpClient<IBankHttpClient, BankHttpClient>(client =>
             {
