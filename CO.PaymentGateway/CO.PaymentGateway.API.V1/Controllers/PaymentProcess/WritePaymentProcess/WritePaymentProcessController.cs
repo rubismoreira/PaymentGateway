@@ -23,7 +23,7 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProces
         {
             var paymentProcessResponse = await this._processPaymentCommand.ExecuteAsync(paymentProcessRequest.ToBusinessRequestModel());
 
-            return Created($"{this.Request.Path.Value}/{paymentProcessResponse.BankResponse}", paymentProcessResponse);
+            return Created($"{this.Request.Path.Value}/{paymentProcessResponse.PaymentProcessId}", paymentProcessResponse);
         }
     }
 

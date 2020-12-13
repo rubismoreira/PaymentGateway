@@ -5,8 +5,10 @@ namespace CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands
 {
     public class PaymentProcessResponse
     {
-        public Guid BankResponse { get; set; }
+        public int PaymentProcessId { get; set; }
 
-        public PaymentStatus PaymentStatus { get; set; }
+        public Guid ContextId { get; set; }
+
+        public PaymentStatus PaymentAcceptanceStatus { get; set; }
     }
 }

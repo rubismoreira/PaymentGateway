@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CO.PaymentGateway.API.V1", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CO.PaymentGateway.HostApp", "CO.PaymentGateway.HostApp\CO.PaymentGateway.HostApp.csproj", "{DC488778-7DC4-46B6-98E5-7963B9227766}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CO.PaymentGateway.BankClient", "CO.PaymentGateway.BankClient\CO.PaymentGateway.BankClient.csproj", "{585D36AE-03CB-4BFF-B31E-7BF0DD0390FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DC488778-7DC4-46B6-98E5-7963B9227766}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC488778-7DC4-46B6-98E5-7963B9227766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC488778-7DC4-46B6-98E5-7963B9227766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{585D36AE-03CB-4BFF-B31E-7BF0DD0390FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{585D36AE-03CB-4BFF-B31E-7BF0DD0390FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{585D36AE-03CB-4BFF-B31E-7BF0DD0390FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{585D36AE-03CB-4BFF-B31E-7BF0DD0390FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
