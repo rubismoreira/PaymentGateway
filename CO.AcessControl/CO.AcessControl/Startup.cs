@@ -10,9 +10,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CO.AcessControl.Core.Service;
+using CO.AcessControl.Models;
+using CO.AcessControl.Service;
 
 namespace CO.AcessControl
 {
@@ -30,25 +34,22 @@ namespace CO.AcessControl
         {
             services.AddControllers();
 
-            services.AddAuthorization(config =>
-            {
-                config.AddPolicy(Policies.Admin, P)
-            })
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IJwtHandlerService, JwtHandlerService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Jwt: Issuer"],
-                    ValidAudience = Configuration["Jwt: Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt: SecretKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
                     ClockSkew = TimeSpan.Zero
                 };
             });

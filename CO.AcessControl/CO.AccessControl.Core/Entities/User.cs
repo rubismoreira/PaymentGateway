@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CO.AcessControl.Models
+namespace CO.AcessControl.Core.Entities
 {
     public class User
     {
+        public int Id { get; set; }
+
         public string Username { get; set; }
 
         public string Password { get; set; }
