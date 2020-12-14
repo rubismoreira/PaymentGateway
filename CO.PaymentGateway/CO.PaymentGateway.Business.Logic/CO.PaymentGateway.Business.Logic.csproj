@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CO.PaymentGateway.BankClient\CO.PaymentGateway.BankClient.csproj" />
     <ProjectReference Include="..\CO.PaymentGateway.Business.Core\CO.PaymentGateway.Business.Core.csproj" />
   </ItemGroup>
 

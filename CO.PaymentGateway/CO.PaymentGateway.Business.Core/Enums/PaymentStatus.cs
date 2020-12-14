@@ -2,8 +2,8 @@
 {
     public enum PaymentStatus
     {
-        Approved,
-        Denied,
-        NotProcessable
+        Approved = 1,
+        Denied = 0,
+        NoAnswer = -1
     }
 }

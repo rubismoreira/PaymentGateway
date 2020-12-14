@@ -52,7 +52,7 @@ The following acceptance criteria rules are required for this endpoint.
 > When the bank entity returns accepted or denied the the payment process is stored on the service database, then a 201 should be returned
 
 
-> The CardNumber should be stored on database masking the first 3/4 with 'X'
+> The CardNumber for effects of this demo will be stored without ofuscation
 
 
 > When it was not possible to connect with bank entity, then a 404 should be returned

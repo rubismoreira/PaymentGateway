@@ -19,7 +19,6 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProces
         public string CardNumber { get; set; }
 
         [Required, FromBody]
-        [RegularExpression("^[0-9]{3, 4}$")]
         public string CVV { get; set; }
 
         [Required, FromBody]
@@ -42,6 +41,12 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProces
         [EnumDataType(typeof(Currency))]
         public Currency Currency { get; set; }
 
+        [Required, FromBody]
+        public Guid ContextId { get; set; }
+
+        [Required, FromBody]
+        public Guid UserId { get; set; }
+
         public PaymentProcessRequest ToBusinessRequestModel()
         {
             return new PaymentProcessRequest
@@ -49,11 +54,14 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProces
                 Amount = this.Amount,
                 CardNumber = this.CardNumber,
                 CardType = this.CardType,
-                CCV = this.CVV,
                 Currency = this.Currency,
+                CVV = this.CVV,
                 RegistrationTime = DateTime.Now,
                 ExpirationMonth = this.ExpirationMonth,
-                ExpirationYear = this.ExpirationYear
+                ExpirationYear = this.ExpirationYear,
+                CardHolderName = this.CardHolderName,
+                ContextId = this.ContextId,
+                UserId = this.UserId
             };
         }
     }
