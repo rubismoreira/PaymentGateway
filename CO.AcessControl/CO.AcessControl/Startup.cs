@@ -14,6 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CO.AcessControl.AcessClient;
 using CO.AcessControl.Core.Service;
 using CO.AcessControl.Models;
 using CO.AcessControl.Service;
@@ -36,7 +37,7 @@ namespace CO.AcessControl
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtHandlerService, JwtHandlerService>();
-
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {

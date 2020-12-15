@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CO.AcessControl.Core.Entities;
+﻿using CO.AcessControl.Core.Entities;
 using CO.AcessControl.Core.Service;
 using CO.AcessControl.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -18,7 +17,7 @@ namespace CO.AcessControl.Controllers
         private readonly IJwtHandlerService _jwtHandlerService;
 
         private readonly IUserService _userService;
-        
+
         public AccessControlController(IConfiguration config, IJwtHandlerService jwtHandlerService, IUserService userService)
         {
             this._config = config;
@@ -41,28 +40,6 @@ namespace CO.AcessControl.Controllers
                 });
             }
             return response;
-        }
-        
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult Authorize([FromBody] AuthorizationRequest authRequest)
-        {
-            try
-            {
-                var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-                
-                var userId = this._jwtHandlerService.RetreiveJwtInfo(token);
-                var isAuthorized = this._userService.AuthorizeUser(userId, authRequest.Policy);
-                
-                if(isAuthorized)
-                    return Ok();
-                else
-                    return Forbid();
-            }
-            catch
-            {
-                return Forbid();
-            }
         }
     }
 }

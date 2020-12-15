@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>401e2c58-46d2-4141-9261-11e134a9f749</UserSecretsId>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,13 +13,10 @@
   <ItemGroup>
     <Content Remove="appsettings.Development.json" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Models\Policies.cs" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\CO.AccessControl.Core\CO.AccessControl.Core.csproj" />
+    <ProjectReference Include="..\CO.AcessControl.AcessClient\CO.AcessControl.AcessClient.csproj" />
   </ItemGroup>
 
 

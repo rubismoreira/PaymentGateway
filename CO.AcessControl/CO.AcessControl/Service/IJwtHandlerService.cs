@@ -6,7 +6,5 @@ namespace CO.AcessControl.Service
     public interface IJwtHandlerService
     {
         string GenerateJWTToken(User userInfo);
-
-        int RetreiveJwtInfo(string token);
     }
 }
