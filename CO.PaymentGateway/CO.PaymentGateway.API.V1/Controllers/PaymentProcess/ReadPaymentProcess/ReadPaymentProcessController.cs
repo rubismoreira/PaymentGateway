@@ -5,6 +5,7 @@ using CO.PaymentGateway.Data.EFContext;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CO.AcessControl.AcessClient;
 
 namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.ReadPaymentProcess
 {
@@ -26,6 +27,7 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.ReadPaymentProcess
 
         // GET: api/PaymentProcessEntities
         [HttpGet("/v1/paymentprocess")]
+        [AuthorizeCO("ReadProcessPayment")]
         public async Task<ActionResult<IEnumerable<PaymentProcessEntity>>> GetProcessPaymentEntities()
         {
             var result = await _getAllQuery.ExecuteAsync();
@@ -34,6 +36,7 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.ReadPaymentProcess
 
         // GET: api/PaymentProcessEntities/5
         [HttpGet("/v1/paymentprocess/{id}")]
+        [AuthorizeCO("ReadProcessPayment")]
         public async Task<ActionResult<PaymentProcessEntity>> GetPaymentProcessEntity(int id)
         {
             var paymentProcessEntity = await this._getByIDQuery.ExecuteAsync(new GetByIdQueryRequest { Id = id });

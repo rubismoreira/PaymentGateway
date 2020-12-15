@@ -5,6 +5,11 @@ services:
         image: rubismoreira/bankrubem1:4001
         ports:
           - "8089:80"
+          
+    accesscontrol:
+        image: rubismoreira/co-accesscontrol
+        ports:
+          - "7771:80"
     
     db:
         image: "microsoft/mssql-server-linux"

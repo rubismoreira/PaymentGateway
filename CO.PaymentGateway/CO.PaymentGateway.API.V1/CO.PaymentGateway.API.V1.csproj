@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CO.AcessControl\CO.AcessControl.AcessClient\CO.AcessControl.AcessClient.csproj" />
     <ProjectReference Include="..\CO.PaymentGateway.Data\CO.PaymentGateway.Data.csproj" />
   </ItemGroup>
 
