@@ -16,7 +16,6 @@
   
   <ItemGroup>
     <ProjectReference Include="..\CO.AccessControl.Core\CO.AccessControl.Core.csproj" />
-    <ProjectReference Include="..\CO.AcessControl.AcessClient\CO.AcessControl.AcessClient.csproj" />
   </ItemGroup>
 
 

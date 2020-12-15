@@ -1,4 +1,3 @@
-using System;
 using CO.AcessControl.Core.Entities;
 
 namespace CO.AcessControl.Service
