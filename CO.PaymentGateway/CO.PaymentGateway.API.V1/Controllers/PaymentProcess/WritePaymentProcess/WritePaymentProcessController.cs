@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using CO.AcessControl.AcessClient;
 using CO.PaymentGateway.Business.Core.PaymentProcessException;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands;
 using CO.PaymentGateway.Data.EFContext;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CO.AcessControl.AcessClient;
 using CO.PaymentGateway.Business.Core.Entities;
 using CO.PaymentGateway.Business.Core.UseCases.Common;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Queries;
