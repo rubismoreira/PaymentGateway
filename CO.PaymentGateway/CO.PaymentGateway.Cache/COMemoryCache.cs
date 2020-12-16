@@ -20,7 +20,7 @@ namespace CO.PaymentGateway.Cache
         public bool TryGetFromCache(Func<string> cacheKey, out object cachedResponse)
         {
             var resultOrigin = string.Empty;
-            var isInCache = _cache.TryGetValue(cacheKey, out cachedResponse);
+            var isInCache = _cache.TryGetValue(cacheKey.Invoke(), out cachedResponse);
             if (isInCache)
                 resultOrigin = "cache";
             else
@@ -37,7 +37,7 @@ namespace CO.PaymentGateway.Cache
                 Priority = CacheItemPriority.Normal,
                 SlidingExpiration = TimeSpan.FromMinutes(5)
             };
-            _cache.Set(cacheKey, cachedResponse, cacheExpirationOptions);
+            _cache.Set(cacheKey.Invoke(), cachedResponse, cacheExpirationOptions);
         }
     }
 }
