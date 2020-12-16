@@ -11,13 +11,10 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Rules
         public void ValidateAsync(ICommandRequest commandRequest)
         {
             var paymentProcessCommandRequest = commandRequest as PaymentProcessRequest;
-            var expirationDate = new DateTime(paymentProcessCommandRequest.ExpirationYear, paymentProcessCommandRequest.ExpirationMonth, 1);
+            var expirationDate = new DateTime(paymentProcessCommandRequest.ExpirationYear,
+                paymentProcessCommandRequest.ExpirationMonth, 1);
 
-            if (expirationDate < DateTime.Today)
-            {
-                throw new  ExpirationDateException();
-            }
+            if (expirationDate < DateTime.Today) throw new ExpirationDateException();
         }
-        
     }
 }

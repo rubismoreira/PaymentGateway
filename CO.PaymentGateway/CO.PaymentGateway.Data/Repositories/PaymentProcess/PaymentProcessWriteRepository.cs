@@ -1,7 +1,7 @@
-﻿using CO.PaymentGateway.Business.Core.Entities;
+﻿using System.Threading.Tasks;
+using CO.PaymentGateway.Business.Core.Entities;
 using CO.PaymentGateway.Business.Core.Repositories;
 using CO.PaymentGateway.Data.EFContext;
-using System.Threading.Tasks;
 
 namespace CO.PaymentGateway.Data.Repositories.PaymentProcess
 {
@@ -11,7 +11,7 @@ namespace CO.PaymentGateway.Data.Repositories.PaymentProcess
 
         public PaymentProcessWriteRepository(PaymentContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public async Task WriteAsync(PaymentProcessEntity entity)

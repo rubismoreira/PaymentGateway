@@ -12,6 +12,7 @@
     <ProjectReference Include="..\CO.PaymentGateway.API.V1\CO.PaymentGateway.API.V1.csproj" />
     <ProjectReference Include="..\CO.PaymentGateway.Business.Core\CO.PaymentGateway.Business.Core.csproj" />
     <ProjectReference Include="..\CO.PaymentGateway.Business.Logic\CO.PaymentGateway.Business.Logic.csproj" />
+    <ProjectReference Include="..\CO.PaymentGateway.Cache\CO.PaymentGateway.Cache.csproj" />
     <ProjectReference Include="..\CO.PaymentGateway.Data\CO.PaymentGateway.Data.csproj" />
   </ItemGroup>
 

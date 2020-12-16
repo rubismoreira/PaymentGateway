@@ -10,15 +10,12 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Rules
 
         public PaymentRuleEngine(IEnumerable<IPaymentProcessValidationRule> rules)
         {
-            this._rules = rules;
+            _rules = rules;
         }
 
         public void ProcessRules(PaymentProcessRequest request)
         {
-            foreach (var rule in this._rules)
-            {
-                rule.ValidateAsync(request);
-            }
+            foreach (var rule in _rules) rule.ValidateAsync(request);
         }
     }
 }

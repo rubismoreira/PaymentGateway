@@ -1,5 +1,5 @@
-﻿using CO.PaymentGateway.Business.Core.Enums;
-using System;
+﻿using System;
+using CO.PaymentGateway.Business.Core.Enums;
 
 namespace CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands
 {

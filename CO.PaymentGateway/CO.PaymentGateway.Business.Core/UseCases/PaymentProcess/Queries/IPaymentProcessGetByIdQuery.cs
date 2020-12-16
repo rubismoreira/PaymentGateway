@@ -1,11 +1,9 @@
 ﻿using CO.PaymentGateway.Business.Core.Entities;
 using CO.PaymentGateway.Business.Core.UseCases.Common;
-using System.Threading.Tasks;
 
 namespace CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Queries
 {
-    public interface IPaymentProcessGetByIdQuery
+    public interface IPaymentProcessGetByIdQuery : IQuery<GetByIdQueryRequest, PaymentProcessEntity>
     {
-        Task<PaymentProcessEntity> ExecuteAsync(GetByIdQueryRequest request);
     }
 }

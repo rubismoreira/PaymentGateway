@@ -1,11 +1,11 @@
-﻿using CO.PaymentGateway.Business.Core.Enums;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using CO.PaymentGateway.Business.Core.Enums;
 
 namespace CO.PaymentGateway.Business.Core.Entities
 {
     [Table("PaymentProcessEntities")]
-    public class PaymentProcessEntity
+    public class PaymentProcessEntity : object
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -18,8 +18,7 @@ namespace CO.PaymentGateway.Business.Core.Entities
 
         public int ValidationYear { get; set; }
 
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal Amount { get; set; }
+        [Column(TypeName = "decimal(10,2)")] public decimal Amount { get; set; }
 
         public DateTime RegistrationTime { get; set; }
 

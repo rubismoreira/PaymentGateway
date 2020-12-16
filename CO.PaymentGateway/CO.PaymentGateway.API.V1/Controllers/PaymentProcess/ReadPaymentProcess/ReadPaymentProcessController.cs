@@ -1,11 +1,10 @@
-﻿using CO.PaymentGateway.Business.Core.Entities;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CO.PaymentGateway.Business.Core.Entities;
 using CO.PaymentGateway.Business.Core.UseCases.Common;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Queries;
 using CO.PaymentGateway.Data.EFContext;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CO.AcessControl.AcessClient;
 
 namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.ReadPaymentProcess
 {
@@ -18,11 +17,13 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.ReadPaymentProcess
 
         private readonly IPaymentProcessGetByIdQuery _getByIDQuery;
 
-        public ReadPaymentProcessController(PaymentContext context, IPaymentProcessGetAllQuery paymentProcessGetAllQuery, IPaymentProcessGetByIdQuery paymentProcessGetByIdQuery)
+        public ReadPaymentProcessController(PaymentContext context,
+            IPaymentProcessGetAllQuery paymentProcessGetAllQuery,
+            IPaymentProcessGetByIdQuery paymentProcessGetByIdQuery)
         {
             _context = context;
-            this._getAllQuery = paymentProcessGetAllQuery;
-            this._getByIDQuery = paymentProcessGetByIdQuery;
+            _getAllQuery = paymentProcessGetAllQuery;
+            _getByIDQuery = paymentProcessGetByIdQuery;
         }
 
         // GET: api/PaymentProcessEntities
@@ -39,16 +40,11 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.ReadPaymentProcess
         [AuthorizeCO("ReadProcessPayment")]
         public async Task<ActionResult<PaymentProcessEntity>> GetPaymentProcessEntity(int id)
         {
-            var paymentProcessEntity = await this._getByIDQuery.ExecuteAsync(new GetByIdQueryRequest { Id = id });
+            var paymentProcessEntity = await _getByIDQuery.ExecuteAsync(new GetByIdQueryRequest {Id = id});
 
-            if (paymentProcessEntity == null)
-            {
-                return NotFound();
-            }
+            if (paymentProcessEntity == null) return NotFound();
 
             return paymentProcessEntity;
         }
     }
-
-
 }

@@ -8,18 +8,17 @@ namespace CO.PaymentGateway.BankClient.Client
     public class BankHttpClient : IBankHttpClient
     {
         private readonly HttpClient _httpClient;
-        private readonly string _remoteServiceBaseUrl;
 
         public BankHttpClient(HttpClient client)
         {
-            this._httpClient = client;
+            _httpClient = client;
         }
 
         public async Task<BankResponse> CreatePayment(BankPayment payment)
         {
             try
             {
-                HttpResponseMessage responseMessage = await _httpClient.PostAsJsonAsync("BankPayment", payment);
+                var responseMessage = await _httpClient.PostAsJsonAsync("BankPayment", payment);
 
                 responseMessage.EnsureSuccessStatusCode();
 
@@ -27,11 +26,10 @@ namespace CO.PaymentGateway.BankClient.Client
 
                 return bankResponse;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new BankResponse { BankResponseId = Guid.Empty };
+                return new BankResponse {BankResponseId = Guid.Empty};
             }
         }
-
     }
 }

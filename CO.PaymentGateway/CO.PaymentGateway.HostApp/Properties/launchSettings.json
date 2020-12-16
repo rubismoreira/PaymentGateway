@@ -10,7 +10,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "SQLSERVER_CONNECTION": "Server=localhost; Database=PaymentProcess;User Id=sa;Password=Dbpass12345678!;MultipleActiveResultSets=true",
-        "BANKCLIENTURL": "http://localhost:8089/"
+        "BANKCLIENTURL": "http://localhost:8089/",
+        "JWTSECRET": "JwtSecreteKeyForever"
       }
     }
   }

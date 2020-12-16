@@ -1,8 +1,8 @@
-﻿using CO.PaymentGateway.Business.Core.Entities;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CO.PaymentGateway.Business.Core.Entities;
 using CO.PaymentGateway.Business.Core.Repositories;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Queries;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Queries
 {
@@ -12,11 +12,12 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Queries
 
         public PaymentProcessGetAllQuery(IPaymentProcessReadRepository repository)
         {
-            this._repository = repository;
+            _repository = repository;
         }
+
         public Task<IEnumerable<PaymentProcessEntity>> ExecuteAsync()
         {
-            return this._repository.GetAllAsync();
+            return _repository.GetAllAsync();
         }
     }
 }

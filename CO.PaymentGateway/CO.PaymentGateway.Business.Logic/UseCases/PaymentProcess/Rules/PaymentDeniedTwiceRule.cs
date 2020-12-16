@@ -12,19 +12,16 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Rules
 
         public PaymentDeniedTwiceRule(IPaymentProcessReadRepository paymentReadRepository)
         {
-            this._paymentReadRepository = paymentReadRepository;
+            _paymentReadRepository = paymentReadRepository;
         }
 
         public void ValidateAsync(ICommandRequest commandRequest)
         {
             var paymentProcessCommandRequest = commandRequest as PaymentProcessRequest;
-            var numberOfDenials = this._paymentReadRepository.GetNumberOfDenialsForCreditCardInAContextAsync
+            var numberOfDenials = _paymentReadRepository.GetNumberOfDenialsForCreditCardInAContextAsync
                 (paymentProcessCommandRequest.ContextId, paymentProcessCommandRequest.CardNumber);
 
-            if (numberOfDenials.Result >= 2)
-            {
-                throw new PaymentDeniedThriceException();
-            }
+            if (numberOfDenials.Result >= 2) throw new PaymentDeniedThriceException();
         }
     }
 }

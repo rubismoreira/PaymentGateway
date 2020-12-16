@@ -1,35 +1,35 @@
-﻿using CO.PaymentGateway.Business.Core.Entities;
-using CO.PaymentGateway.Business.Core.Repositories;
-using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands;
+﻿using System;
 using System.Threading.Tasks;
 using CO.PaymentGateway.BankClient.Client;
 using CO.PaymentGateway.BankClient.Entities;
+using CO.PaymentGateway.Business.Core.Entities;
 using CO.PaymentGateway.Business.Core.Enums;
-using System;
+using CO.PaymentGateway.Business.Core.Repositories;
+using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Rules;
 
 namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
 {
     public class PaymentProcessCommand : IPaymentProcessCommand
     {
+        private readonly IBankHttpClient _bankClient;
         private readonly IPaymentProcessWriteRepository _repository;
 
-        private readonly IBankHttpClient _bankClient;
-
         private readonly IPaymentRuleEngine _ruleEngine;
-        
-        public PaymentProcessCommand(IPaymentProcessWriteRepository repository, IBankHttpClient bankClient, IPaymentRuleEngine ruleEngine)
+
+        public PaymentProcessCommand(IPaymentProcessWriteRepository repository, IBankHttpClient bankClient,
+            IPaymentRuleEngine ruleEngine)
         {
-            this._repository = repository;
-            this._bankClient = bankClient;
-            this._ruleEngine = ruleEngine;
+            _repository = repository;
+            _bankClient = bankClient;
+            _ruleEngine = ruleEngine;
         }
 
         public async Task<PaymentProcessResponse> ExecuteAsync(PaymentProcessRequest request)
         {
-            this._ruleEngine.ProcessRules(request);
+            _ruleEngine.ProcessRules(request);
 
-            var clientResponse = await this._bankClient.CreatePayment(new BankPayment
+            var clientResponse = await _bankClient.CreatePayment(new BankPayment
             {
                 Amount = request.Amount,
                 CardHolderName = request.CardHolderName,
@@ -39,7 +39,7 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
                 ExpirationYear = request.ExpirationYear
             });
 
-            PaymentProcessEntity entity = new PaymentProcessEntity()
+            var entity = new PaymentProcessEntity
             {
                 Amount = request.Amount,
                 CardNumber = request.CardNumber,
@@ -50,12 +50,18 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
                 ContextId = request.ContextId,
                 UserId = request.UserId,
                 BankResponse = clientResponse.BankResponseId,
-                BankResponseStatus = clientResponse.BankResponseId == Guid.Empty ? PaymentStatus.NoAnswer : (PaymentStatus)clientResponse.Status
+                BankResponseStatus = clientResponse.BankResponseId == Guid.Empty
+                    ? PaymentStatus.NoAnswer
+                    : (PaymentStatus) clientResponse.Status
             };
 
-            await this._repository.WriteAsync(entity);
+            await _repository.WriteAsync(entity);
 
-            return new PaymentProcessResponse { ContextId = entity.ContextId, PaymentAcceptanceStatus = entity.BankResponseStatus, PaymentProcessId = entity.Id };
+            return new PaymentProcessResponse
+            {
+                ContextId = entity.ContextId, PaymentAcceptanceStatus = entity.BankResponseStatus,
+                PaymentProcessId = entity.Id
+            };
         }
     }
 }

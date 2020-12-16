@@ -24,7 +24,7 @@ namespace CO.AcessControl.Core.Service
         
         public bool AuthorizeUser(int userId, string policy)
         {
-            var user = appUsers.Where(x => x.Id == userId).FirstOrDefault();
+            var user = appUsers.FirstOrDefault(x => x.Id == userId);
             if (user == null)
                 return false;
             else

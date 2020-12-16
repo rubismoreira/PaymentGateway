@@ -1,13 +1,12 @@
-﻿using CO.PaymentGateway.Business.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CO.PaymentGateway.Business.Core.Entities;
+using CO.PaymentGateway.Business.Core.Enums;
 using CO.PaymentGateway.Business.Core.Repositories;
 using CO.PaymentGateway.Data.EFContext;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CO.PaymentGateway.Business.Core.Enums;
 
 namespace CO.PaymentGateway.Data.Repositories.PaymentProcess
 {
@@ -17,7 +16,7 @@ namespace CO.PaymentGateway.Data.Repositories.PaymentProcess
 
         public PaymentProcessReadRepository(PaymentContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public async Task<IEnumerable<PaymentProcessEntity>> GetAllAsync()

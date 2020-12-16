@@ -7,12 +7,15 @@ using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Rules;
 using CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands;
 using CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Queries;
 using CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Rules;
+using CO.PaymentGateway.Cache;
 using CO.PaymentGateway.Data.EFContext;
 using CO.PaymentGateway.Data.Repositories.PaymentProcess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
@@ -30,7 +33,12 @@ namespace CO.PaymentGateway.HostApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureAccessControl();
             services.AddControllers();
+
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.TryAddSingleton<ICOMemoryCache, COMemoryCache>();
+            services.AddMemoryCache();
 
             services.AddDbContext<PaymentContext>();
 
@@ -52,7 +60,7 @@ namespace CO.PaymentGateway.HostApp
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CO.PaymentGateway.HostApp", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "CO.PaymentGateway.HostApp", Version = "v1"});
             });
         }
 
@@ -71,13 +79,12 @@ namespace CO.PaymentGateway.HostApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseAuthentication();
+
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

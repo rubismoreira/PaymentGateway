@@ -7,7 +7,7 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Queries.Helpe
     {
         public static void Mask(ref PaymentProcessEntity entity)
         {
-            StringBuilder sb = new StringBuilder("XXXX-XXXX-XXXX-");
+            var sb = new StringBuilder("XXXX-XXXX-XXXX-");
             sb.Append(entity.CardNumber.Substring(12));
             entity.CardNumber = sb.ToString();
         }

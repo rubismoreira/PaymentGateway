@@ -1,5 +1,3 @@
-using System;
-
 namespace CO.PaymentGateway.BankClient.Entities
 {
     public class BankPayment

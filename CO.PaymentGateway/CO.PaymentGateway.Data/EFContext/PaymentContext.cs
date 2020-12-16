@@ -8,7 +8,6 @@ namespace CO.PaymentGateway.Data.EFContext
     {
         public PaymentContext(DbContextOptions<PaymentContext> options) : base(options)
         {
-
         }
 
         public DbSet<PaymentProcessEntity> ProcessPaymentEntities { get; set; }

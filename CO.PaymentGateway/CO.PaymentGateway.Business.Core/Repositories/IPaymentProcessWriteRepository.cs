@@ -1,11 +1,10 @@
-﻿using CO.PaymentGateway.Business.Core.Entities;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CO.PaymentGateway.Business.Core.Entities;
 
 namespace CO.PaymentGateway.Business.Core.Repositories
 {
     public interface IPaymentProcessWriteRepository
     {
-        Task WriteAsync(PaymentProcessEntity entity); 
-
+        Task WriteAsync(PaymentProcessEntity entity);
     }
 }
