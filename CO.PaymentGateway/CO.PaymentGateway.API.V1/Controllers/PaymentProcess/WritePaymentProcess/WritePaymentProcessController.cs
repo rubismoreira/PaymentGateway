@@ -4,6 +4,7 @@ using CO.PaymentGateway.Business.Core.PaymentProcessException;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands;
 using CO.PaymentGateway.Data.EFContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProcess
 {
@@ -14,10 +15,13 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProces
 
         private readonly IPaymentProcessCommand _processPaymentCommand;
 
-        public WritePaymentProcessController(PaymentContext context, IPaymentProcessCommand paymentProcessCommand)
+        private readonly ILogger<WritePaymentProcessController> _logger;
+
+        public WritePaymentProcessController(PaymentContext context, IPaymentProcessCommand paymentProcessCommand, ILogger<WritePaymentProcessController> logger)
         {
             _context = context;
             _processPaymentCommand = paymentProcessCommand;
+            _logger = logger;
         }
 
         [HttpPost("/v1/paymentprocess")]
@@ -27,11 +31,14 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProces
         {
             try
             {
-                var paymentProcessResponse =
-                    await _processPaymentCommand.ExecuteAsync(paymentProcessRequest.ToBusinessRequestModel());
+                {
+                    var paymentProcessResponse =
+                        await _processPaymentCommand.ExecuteAsync(paymentProcessRequest.ToBusinessRequestModel());
 
-                return Created($"{Request.Path.Value}/{paymentProcessResponse.PaymentProcessId}",
-                    paymentProcessResponse);
+
+                    return Created($"{Request.Path.Value}/{paymentProcessResponse.PaymentProcessId}",
+                        paymentProcessResponse);
+                }
             }
 
             catch (COPaymentException ex)

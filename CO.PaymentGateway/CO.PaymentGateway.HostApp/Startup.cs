@@ -44,7 +44,7 @@ namespace CO.PaymentGateway.HostApp
             services.TryAddSingleton<ICOMemoryCache, COMemoryCache>();
             services.AddMemoryCache();
 
-            
+
 
             services.AddScoped<IPaymentProcessWriteRepository, PaymentProcessWriteRepository>();
             services.AddScoped<IPaymentProcessReadRepository, PaymentProcessReadRepository>();
@@ -64,12 +64,12 @@ namespace CO.PaymentGateway.HostApp
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "CO.PaymentGateway.HostApp", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CO.PaymentGateway.HostApp", Version = "v1" });
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, PaymentContext paymentContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -78,7 +78,9 @@ namespace CO.PaymentGateway.HostApp
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CO.PaymentGateway.HostApp v1"));
             }
 
-            paymentContext.Database.EnsureCreated();
+            using (var scope = app.ApplicationServices.CreateScope())
+            using (var context = scope.ServiceProvider.GetService<PaymentContext>())
+                context.Database.EnsureCreated();
 
             app.UseHttpsRedirection();
 

@@ -25,7 +25,5 @@ namespace CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands
         public Currency Currency { get; set; }
 
         public Guid ContextId { get; set; }
-
-        public Guid UserId { get; set; }
     }
 }

@@ -60,8 +60,7 @@ namespace CO.PaymentGateway.API.V1.Controllers.PaymentProcess.WritePaymentProces
                 ExpirationMonth = this.ExpirationMonth,
                 ExpirationYear = this.ExpirationYear,
                 CardHolderName = this.CardHolderName,
-                ContextId = this.ContextId,
-                UserId = this.UserId
+                ContextId = this.ContextId
             };
         }
     }

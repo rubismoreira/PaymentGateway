@@ -28,8 +28,6 @@ namespace CO.PaymentGateway.Business.Core.Entities
 
         public Guid ContextId { get; set; }
 
-        public Guid UserId { get; set; }
-
         public Guid BankResponse { get; set; }
 
         public PaymentStatus BankResponseStatus { get; set; }

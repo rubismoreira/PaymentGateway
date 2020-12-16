@@ -7,6 +7,7 @@ using CO.PaymentGateway.Business.Core.Enums;
 using CO.PaymentGateway.Business.Core.Repositories;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Rules;
+using Microsoft.Extensions.Logging;
 
 namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
 {
@@ -14,20 +15,24 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
     {
         private readonly IBankHttpClient _bankClient;
         private readonly IPaymentProcessWriteRepository _repository;
-
+        private readonly ILogger<PaymentProcessCommand> _logger;
         private readonly IPaymentRuleEngine _ruleEngine;
 
         public PaymentProcessCommand(IPaymentProcessWriteRepository repository, IBankHttpClient bankClient,
-            IPaymentRuleEngine ruleEngine)
+            IPaymentRuleEngine ruleEngine, ILogger<PaymentProcessCommand> logger)
         {
             _repository = repository;
             _bankClient = bankClient;
             _ruleEngine = ruleEngine;
+            _logger = logger;
         }
 
         public async Task<PaymentProcessResponse> ExecuteAsync(PaymentProcessRequest request)
         {
+            _logger.LogInformation($"Validating payment on context {request.ContextId}");
             _ruleEngine.ProcessRules(request);
+
+            _logger.LogInformation($"Creating request to bank entity");
 
             var clientResponse = await _bankClient.CreatePayment(new BankPayment
             {
@@ -48,12 +53,13 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
                 Currency = request.Currency,
                 RegistrationTime = request.RegistrationTime,
                 ContextId = request.ContextId,
-                UserId = request.UserId,
                 BankResponse = clientResponse.BankResponseId,
                 BankResponseStatus = clientResponse.BankResponseId == Guid.Empty
                     ? PaymentStatus.NoAnswer
                     : (PaymentStatus) clientResponse.Status
             };
+
+            _logger.LogInformation($"Storing payment process request on database");
 
             await _repository.WriteAsync(entity);
 
