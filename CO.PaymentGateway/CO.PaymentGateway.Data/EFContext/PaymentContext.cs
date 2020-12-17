@@ -14,7 +14,7 @@ namespace CO.PaymentGateway.Data.EFContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION"));
+            optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION"));
         }
     }
 }

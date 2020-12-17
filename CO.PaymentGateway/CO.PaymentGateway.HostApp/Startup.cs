@@ -39,12 +39,11 @@ namespace CO.PaymentGateway.HostApp
             services.ConfigureAccessControl();
             services.AddControllers();
 
-
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.TryAddSingleton<ICOMemoryCache, COMemoryCache>();
             services.AddMemoryCache();
 
-
+            services.AddDataProtection();
 
             services.AddScoped<IPaymentProcessWriteRepository, PaymentProcessWriteRepository>();
             services.AddScoped<IPaymentProcessReadRepository, PaymentProcessReadRepository>();

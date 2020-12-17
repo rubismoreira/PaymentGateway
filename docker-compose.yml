@@ -2,7 +2,7 @@ version: "2.4"
 
 services:
     bankService:
-        image: rubismoreira/bankrubem1:4001
+        image: rubismoreira/bankrubem1:5000
         ports:
           - "8089:80"
           
