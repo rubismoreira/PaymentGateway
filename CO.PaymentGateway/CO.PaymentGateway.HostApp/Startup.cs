@@ -19,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using CO.AcessControl.AcessClient;
+using CO.PaymentGateway.Encryption.EncryptionClient;
 
 namespace CO.PaymentGateway.HostApp
 {
@@ -55,6 +56,7 @@ namespace CO.PaymentGateway.HostApp
             services.AddScoped<IPaymentProcessValidationRule, ExpirationDateIsValidRule>();
             services.AddScoped<IPaymentProcessValidationRule, PaymentDeniedTwiceRule>();
             services.AddScoped<IPaymentRuleEngine, PaymentRuleEngine>();
+            services.AddSingleton<IEncryptionClient, EncryptionClientManager>();
 
             services.AddHttpClient<IBankHttpClient, BankHttpClient>(client =>
             {

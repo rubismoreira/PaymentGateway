@@ -5,6 +5,6 @@ namespace CO.PaymentGateway.BankClient.Client
 {
     public interface IBankHttpClient
     {
-        Task<BankResponse> CreatePayment(BankPayment payment);
+        Task<BankResponse> CreatePaymentAsync(BankPayment payment);
     }
 }

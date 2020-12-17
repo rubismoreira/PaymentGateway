@@ -11,7 +11,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "SQLSERVER_CONNECTION": "Server=localhost; Database=PaymentProcess;User Id=sa; Password=Dbpass12345678!; MultipleActiveResultSets=true",
         "BANKCLIENTURL": "http://localhost:8089/",
-        "JWTSECRET": "JwtSecreteKeyForever"
+        "JWTSECRET": "JwtSecreteKeyForever",
+        "ENCRYPTIONKEY": "encryption_key_for_CO_Paym3n7_G4t3W410!"
       }
     }
   }

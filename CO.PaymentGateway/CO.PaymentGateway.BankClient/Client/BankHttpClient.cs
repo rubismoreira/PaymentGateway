@@ -17,7 +17,7 @@ namespace CO.PaymentGateway.BankClient.Client
             _logger = logger;
         }
 
-        public async Task<BankResponse> CreatePayment(BankPayment payment)
+        public async Task<BankResponse> CreatePaymentAsync(BankPayment payment)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace CO.PaymentGateway.BankClient.Client
             catch (Exception)
             {
                 _logger.LogError("Bad communication with bank client. Returning empty guid as response");
-                return new BankResponse {BankResponseId = Guid.Empty};
+                return new BankResponse { BankResponseId = Guid.Empty };
             }
         }
     }

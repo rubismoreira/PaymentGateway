@@ -25,5 +25,7 @@ namespace CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands
         public Currency Currency { get; set; }
 
         public Guid ContextId { get; set; }
+
+        public string CardStringRepresentation => $"{CardNumber}-{CardHolderName}-{CVV}";
     }
 }

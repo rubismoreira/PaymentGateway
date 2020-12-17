@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using System;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace CO.PaymentGateway.Encryption.EncryptionClient
 {
-    public class EncryptionClient
+    public class EncryptionClientManager : IEncryptionClient
     {
         private readonly IDataProtectionProvider _dataProtectionProvider;
 
-        private const string Key = "encryption_key_for_CO_Paym3n7_G4t3W410!";
+        private readonly string Key;
 
-        public EncryptionClient(IDataProtectionProvider dataprotectionProvider)
+        public EncryptionClientManager(IDataProtectionProvider dataprotectionProvider)
         {
             _dataProtectionProvider = dataprotectionProvider;
+            Key = Environment.GetEnvironmentVariable("ENCRYPTIONKEY");
         }
 
         public string Encrypt(string input)

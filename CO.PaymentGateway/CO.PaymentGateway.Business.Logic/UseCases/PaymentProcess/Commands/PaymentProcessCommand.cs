@@ -7,6 +7,7 @@ using CO.PaymentGateway.Business.Core.Enums;
 using CO.PaymentGateway.Business.Core.Repositories;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Commands;
 using CO.PaymentGateway.Business.Core.UseCases.PaymentProcess.Rules;
+using CO.PaymentGateway.Encryption.EncryptionClient;
 using Microsoft.Extensions.Logging;
 
 namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
@@ -17,14 +18,16 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
         private readonly IPaymentProcessWriteRepository _repository;
         private readonly ILogger<PaymentProcessCommand> _logger;
         private readonly IPaymentRuleEngine _ruleEngine;
+        private readonly IEncryptionClient _encryptionClient;
 
         public PaymentProcessCommand(IPaymentProcessWriteRepository repository, IBankHttpClient bankClient,
-            IPaymentRuleEngine ruleEngine, ILogger<PaymentProcessCommand> logger)
+            IPaymentRuleEngine ruleEngine, ILogger<PaymentProcessCommand> logger, IEncryptionClient encryptionClient)
         {
             _repository = repository;
             _bankClient = bankClient;
             _ruleEngine = ruleEngine;
             _logger = logger;
+            _encryptionClient = encryptionClient;
         }
 
         public async Task<PaymentProcessResponse> ExecuteAsync(PaymentProcessRequest request)
@@ -32,16 +35,15 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
             _logger.LogInformation($"Validating payment on context {request.ContextId}");
             _ruleEngine.ProcessRules(request);
 
-            _logger.LogInformation($"Creating request to bank entity");
+            _logger.LogInformation("Encrypting credit card data");
+            var encryptedData = this._encryptionClient.Encrypt(request.CardStringRepresentation);
 
-            var clientResponse = await _bankClient.CreatePayment(new BankPayment
+            _logger.LogInformation($"Creating request to bank entity");
+            var clientResponse = await _bankClient.CreatePaymentAsync(new BankPayment
             {
                 Amount = request.Amount,
-                CardHolderName = request.CardHolderName,
-                CreditCard = request.CardNumber,
-                Cvv = request.CVV,
-                ExpirationMonth = request.ExpirationMonth,
-                ExpirationYear = request.ExpirationYear
+                Deny = request.CardType == CardType.Other,
+                CardEncryptedData = encryptedData
             });
 
             var entity = new PaymentProcessEntity
@@ -56,7 +58,7 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
                 BankResponse = clientResponse.BankResponseId,
                 BankResponseStatus = clientResponse.BankResponseId == Guid.Empty
                     ? PaymentStatus.NoAnswer
-                    : (PaymentStatus) clientResponse.Status
+                    : (PaymentStatus)clientResponse.Status
             };
 
             _logger.LogInformation($"Storing payment process request on database");
@@ -65,7 +67,8 @@ namespace CO.PaymentGateway.Business.Logic.UseCases.PaymentProcess.Commands
 
             return new PaymentProcessResponse
             {
-                ContextId = entity.ContextId, PaymentAcceptanceStatus = entity.BankResponseStatus,
+                ContextId = entity.ContextId,
+                PaymentAcceptanceStatus = entity.BankResponseStatus,
                 PaymentProcessId = entity.Id
             };
         }

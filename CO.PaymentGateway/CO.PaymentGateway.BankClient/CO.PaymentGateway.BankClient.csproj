@@ -6,4 +6,7 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CO.PaymentGateway.Encryption\CO.PaymentGateway.Encryption.csproj" />
+  </ItemGroup>
 </Project>
