@@ -99,12 +99,11 @@ they are
 
 
 |Id |Username|Password|Roles|
-| :- | :- | :- | :- | 
-
-| Id = 1| Username = "UserRead"| Password = "1234"| Roles = { "ReadProcessPayment"} |
-| Id = 2| Username = "UserWrite"| Password = "1234"| Roles =  { "WriteProcessPayment" } |
-| Id = 3| Username = "UserFull"| Password = "1234"| Roles = { "ReadProcessPayment", "WriteProcessPayment" } |
-| Id = 4| Username = "UserNone"| Password = "1234"| Roles = {}|
+| :-: | :-: | :-: | :-: | 
+|  1|  "UserRead"|  "1234"|  { "ReadProcessPayment"} |
+| 2|  "UserWrite"|  "1234"|  { "WriteProcessPayment" } |
+|  3|  "UserFull"| "1234"|  { "ReadProcessPayment", "WriteProcessPayment" } |
+|  4|  "UserNone"|  "1234"|  {}|
 
 
 

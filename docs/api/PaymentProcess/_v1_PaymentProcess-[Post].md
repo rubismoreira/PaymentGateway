@@ -26,7 +26,6 @@ application/json
 - CardType* [enum] [Visa, MasterCard, Dinners, Other]
 - Currency* [enum] [USD, EUR, BRL]
 - ContextId* [Guid] [Shopping Cart Id from the Merchant Entity]
-- UserId* [Guid]
 
 ```
 
@@ -60,6 +59,8 @@ WriteProcessPayment
 ### Acceptance Criteria
 
 The following acceptance criteria rules are required for this endpoint.
+
+> The card data should be encrypted before calling bank client
 
 > When the bank entity returns accepted or denied the the payment process is stored on the service database, then a 201 should be returned
 
