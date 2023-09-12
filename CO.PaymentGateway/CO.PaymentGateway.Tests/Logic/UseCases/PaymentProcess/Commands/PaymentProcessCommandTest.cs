@@ -94,6 +94,17 @@ namespace CO.PaymentGateway.Tests.Logic.UseCases.PaymentProcess.Commands
             //Assert
             var ex = Assert.ThrowsAsync<COPaymentException>(() => _processCommand.ExecuteAsync(this._defaultRequest));
         }
+
+              [Test]
+        public async Task PaymentProcessCommandExecuteAsync_OneValidationFailsOnValidationEngine_ThrowsCOPaymentException()
+        {
+            //Arrange
+            _paymentRuleEngineMock.Setup(m=> m.ProcessRules(It.IsAny<PaymentProcessRequest>())).Throws<COPaymentException>();
+            
+            //Assert
+            var ex = Assert.ThrowsAsync<COPaymentException>(() => _processCommand.ExecuteAsync(this._defaultRequest));
+        }
+        
         
         [Test]
         public async Task PaymentProcessCommandExecuteAsync_FailsCommunicationWithBankClient_WritesOnDbNotPossibleToConnect()
